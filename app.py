@@ -59,12 +59,20 @@ fig.update_traces(
 
 )
 
+"""
+xaxis = dict(range=[-4,11],),
+yaxis = dict(range=[-5,3],),
+zaxis = dict(range=[3,13],),
+
+add the above code snippet to scene dict in fig.update_layout to limit the 
+axes of the plot. I used this purely for when I was standardising for writing
+my thesis
+"""
+
+
 fig.update_layout(
     legend= {'itemsizing': 'constant'},
-    scene = dict(
-                    xaxis = dict(range=[-4,11],),
-                    yaxis = dict(range=[-5,3],),
-                    zaxis = dict(range=[3,13],),
+    scene = dict(          
                     xaxis_title="UMAP axis 1",
                     yaxis_title="UMAP axis 2",
                     zaxis_title="UMAP axis 3",
