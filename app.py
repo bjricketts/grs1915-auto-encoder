@@ -12,9 +12,10 @@ from dash import Dash, dcc, html, Input, Output, no_update
 import plotly.graph_objects as go
 import plotly.express as px
 
-option_list_time = ["256","1024"]
+option_list_time = ["256","1024","2048","Feature Selected 256","3 features",
+                    "9 features","20 features","36 features"]
 option_list_view = ["Definite Classes","All data","Intensity loss",
-                    "HR1 loss", "HR2 loss"]
+                    "HR1 loss", "HR2 loss","SCD map"]
 
 app = Dash(__name__)
 
@@ -53,6 +54,8 @@ def display_hover(hoverData,time,view):
         file = "umap_codes"
     elif time == "1024":
         file = "umap_codes_1024"
+    elif time == "2048":
+        file = "umap_codes_2048"
     else:
         file = "umap_codes"
         
@@ -126,6 +129,10 @@ def display_hover(hoverData,time,view):
 def update_figure(time,view):
     filtered_list = ["alpha","beta","chi","delta","gamma","lambda","kappa","mu","nu",
                      "omega","phi","rho","theta"]
+    chaotic = ["beta", "lambda", "kappa", "mu"]
+    deterministic = ["theta", "rho", "alpha", "nu", "delta"]
+    stochastic = ["phi", "gamma", "chi"]
+
     greek_list = ["α","β","χ","δ","γ","λ","κ","μ","ν","ω","φ","ρ","θ"]
     symbols = ["circle","cross","diamond","square","x","circle","cross","diamond",
                "square","x","circle","cross","diamond"]
@@ -135,6 +142,18 @@ def update_figure(time,view):
         file = "umap_codes"
     elif time == "1024":
         file = "umap_codes_1024"
+    elif time == "2048":
+        file = "umap_codes_2048"
+    elif time == "Feature Selected 256":
+        file = "umap_codes_feature_selected"
+    elif time == "3 features":
+        file = "umap_codes_feature_3"
+    elif time == "9 features":
+        file = "umap_codes_feature_9"
+    elif time == "20 features":
+        file = "umap_codes_feature_20"
+    elif time == "36 features":
+        file = "umap_codes_feature_36"
     else:
         file = "umap_codes"
         
@@ -237,8 +256,19 @@ def update_figure(time,view):
             hovertemplate=None,
             marker_showscale = True
         )
-    
-    
+    elif view == "SCD map":
+        for i,item in enumerate(df_final["physical"].unique()):
+            fig.add_trace(go.Scatter3d(
+                x=df_final["x"][df_final["physical"] == item],
+                y=df_final["y"][df_final["physical"] == item],
+                z=df_final["z"][df_final["physical"] == item],
+                mode='markers',
+                name = item,
+                marker=dict(
+                    size=2,
+                    )
+                )
+            )
     
     fig.update_layout(
         legend= {'itemsizing': 'constant'},
