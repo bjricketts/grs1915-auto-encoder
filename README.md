@@ -11,6 +11,7 @@ app.py and the pickle files need to be in the same folder when you run app.py
 To view the projection, go to http://127.0.0.1:8050/ in your browser. The program shouldn't take long to load - it is only really loading a pandas dataframe and plotting it.
 
 There are 3 different projections: a projection generated from data using 256 second long segments, another projection similarly generated with 1024 second long segments and finally another on the 2048 time scale.
+There are also a number of other projections that only take into consideration some of the latent space produced by the UMAP for the 256 second timescale.
 You can select 5 different ways of viewing each projection:
 Only plotting points that have been definitively labelled with a high conifdence.
 Plot all points including observations that are more tenously labeled or not labeled at all.
